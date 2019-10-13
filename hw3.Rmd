@@ -65,7 +65,12 @@ select(aisle, product_name) %>%
   knitr::kable()
  
 ```
-From the table, I find the most ordered items are cane sugar, light brown sugar and pure baking soda in aisle baking ingredients.The most ordered items are organix chicken & brown rice recipe, small dog biscuits and snack sticks chicken &rice recioe dog treats in aisle dog food care. The most ordered items are organic baby spinach, organic blueberries, and organic raspberries in aisle packaged vagetables fruits.
+
+#From the table, I find the most ordered items are cane sugar, light brown sugar and pure baking soda in aisle baking ingredients.The most ordered items are organix chicken & brown rice recipe, small dog biscuits and snack sticks chicken &rice recioe dog treats in aisle dog food care. The most ordered items are organic baby spinach, organic blueberries, and organic raspberries in aisle packaged vagetables fruits.
+
+
+
+
 ```{r}
 
  instacart %>%
@@ -77,7 +82,7 @@ From the table, I find the most ordered items are cane sugar, light brown sugar 
               values_from = means) %>%
     knitr::kable()
   
-
-
 ```
-From the table, I find that in Coffee Ice Cream, the mean hour is concerning on afternoon from 13 to 15, and the mean hour is concerning on noon from 11 to 14.
+
+#From the table, I find that in Coffee Ice Cream, the mean hour is concerning on afternoon from 13 to 15, and the mean hour is concerning on noon from 11 to 14.
+

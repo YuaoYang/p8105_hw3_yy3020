@@ -111,18 +111,25 @@ select(aisle, product_name) %>%
   knitr::kable()
 ```
 
-| aisle                         | product\_name                                    |                                                                                                                                                                                                                                                                                                                                                   n |
-| :---------------------------- | :----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| baking ingredients            | Cane Sugar                                       |                                                                                                                                                                                                                                                                                                                                                 336 |
-| baking ingredients            | Light Brown Sugar                                |                                                                                                                                                                                                                                                                                                                                                 499 |
-| baking ingredients            | Pure Baking Soda                                 |                                                                                                                                                                                                                                                                                                                                                 387 |
-| dog food care                 | Organix Chicken & Brown Rice Recipe              |                                                                                                                                                                                                                                                                                                                                                  28 |
-| dog food care                 | Small Dog Biscuits                               |                                                                                                                                                                                                                                                                                                                                                  26 |
-| dog food care                 | Snack Sticks Chicken & Rice Recipe Dog Treats    |                                                                                                                                                                                                                                                                                                                                                  30 |
-| packaged vegetables fruits    | Organic Baby Spinach                             |                                                                                                                                                                                                                                                                                                                                                9784 |
-| packaged vegetables fruits    | Organic Blueberries                              |                                                                                                                                                                                                                                                                                                                                                4966 |
-| packaged vegetables fruits    | Organic Raspberries                              |                                                                                                                                                                                                                                                                                                                                                5546 |
-| From the table, I find the mo | st ordered items are cane sugar, light brown sug | ar and pure baking soda in aisle baking ingredients.The most ordered items are organix chicken & brown rice recipe, small dog biscuits and snack sticks chicken \&rice recioe dog treats in aisle dog food care. The most ordered items are organic baby spinach, organic blueberries, and organic raspberries in aisle packaged vagetables fruits. |
+| aisle                      | product\_name                                 |    n |
+| :------------------------- | :-------------------------------------------- | ---: |
+| baking ingredients         | Cane Sugar                                    |  336 |
+| baking ingredients         | Light Brown Sugar                             |  499 |
+| baking ingredients         | Pure Baking Soda                              |  387 |
+| dog food care              | Organix Chicken & Brown Rice Recipe           |   28 |
+| dog food care              | Small Dog Biscuits                            |   26 |
+| dog food care              | Snack Sticks Chicken & Rice Recipe Dog Treats |   30 |
+| packaged vegetables fruits | Organic Baby Spinach                          | 9784 |
+| packaged vegetables fruits | Organic Blueberries                           | 4966 |
+| packaged vegetables fruits | Organic Raspberries                           | 5546 |
+
+\#From the table, I find the most ordered items are cane sugar, light
+brown sugar and pure baking soda in aisle baking ingredients.The most
+ordered items are organix chicken & brown rice recipe, small dog
+biscuits and snack sticks chicken \&rice recioe dog treats in aisle dog
+food care. The most ordered items are organic baby spinach, organic
+blueberries, and organic raspberries in aisle packaged vagetables
+fruits.
 
 ``` r
  instacart %>%
@@ -135,8 +142,11 @@ select(aisle, product_name) %>%
     knitr::kable()
 ```
 
-| product\_name       |           0 |          1 |          2 |         3 |           4 |           5 |                                                                          6 |
-| :------------------ | ----------: | ---------: | ---------: | --------: | ----------: | ----------: | -------------------------------------------------------------------------: |
-| Coffee Ice Cream    |    13.77419 |   14.31579 |   15.38095 |  15.31818 |    15.21739 |    12.26316 |                                                                   13.83333 |
-| Pink Lady Apples    |    13.44118 |   11.36000 |   11.70213 |  14.25000 |    11.55172 |    12.78431 |                                                                   11.93750 |
-| From the table, I f | ind that in | Coffee Ice | Cream, the | mean hour | is concerni | ng on after | noon from 13 to 15, and the mean hour is concerning on noon from 11 to 14. |
+| product\_name    |        0 |        1 |        2 |        3 |        4 |        5 |        6 |
+| :--------------- | -------: | -------: | -------: | -------: | -------: | -------: | -------: |
+| Coffee Ice Cream | 13.77419 | 14.31579 | 15.38095 | 15.31818 | 15.21739 | 12.26316 | 13.83333 |
+| Pink Lady Apples | 13.44118 | 11.36000 | 11.70213 | 14.25000 | 11.55172 | 12.78431 | 11.93750 |
+
+\#From the table, I find that in Coffee Ice Cream, the mean hour is
+concerning on afternoon from 13 to 15, and the mean hour is concerning
+on noon from 11 to 14.
