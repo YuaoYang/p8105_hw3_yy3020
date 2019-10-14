@@ -191,13 +191,14 @@ accel_data_tidy %>%
    activity = as.numeric(activity)) %>%
  mutate(
     hour=(activity) %/%60) %>%
-  group_by(hour, day, week) %>%
-  summarise(hour_activity = sum(activity)) %>%
-ggplot( aes(x=week, y=hour, color = day)) +  geom_point() +
+  group_by(week, day, hour) %>%
+  summarise(hour_activity = sum(counts)) %>%
+ggplot( aes(x= hour, y=hour_activity, fill = day)) + geom_bar(stat = "identity",   position=position_dodge()) +
   labs(
-    title = "24-hour activity time for each day",
-    x = "week",
-    y = "24-hour activity sum"
+    title = "24-hour activity  for each day",
+    x = "24 hour",
+    y = "one hour activity sum"
    ) 
 
 ```
+From the plot, we can find that never mind which day in a week, this guy has lower activity from 23 to 5 clock, and the total trend shows that this guy has higher activity per hour from 18 to 21 clock, especailly, the highest activity at the noon of Monday.
