@@ -260,3 +260,73 @@ from poor to excellent, and the good and very good response have the
 higher value. From the plot of 2010, the total trend is the same as it
 in 2016, the good and very good response have the higher value for the
 all countries.
+
+\#Problem 3
+
+``` r
+accel_data = read_csv(file = "./accel_data.csv")
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_double(),
+    ##   day = col_character()
+    ## )
+
+    ## See spec(...) for full column specifications.
+
+``` r
+accel_data_tidy = read_csv(file = "./accel_data.csv")%>% 
+  janitor::clean_names() %>%
+  pivot_longer(4:1443, names_to = "activity",names_prefix = "activity_", values_to = "counts") %>%
+   mutate(day = factor(day, level = c("Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))) %>%
+  select(week, day, activity, counts) %>%
+  mutate(weekdayVSweekend = ifelse(day %in% c("Monday","Tuesday", "Wednesday", "Thursday", "Friday"),  "weekday", "weekend" )) 
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_double(),
+    ##   day = col_character()
+    ## )
+    ## See spec(...) for full column specifications.
+
+There are {50400} observations and {5} variables. And the names of
+variables are {week, day, activity, counts, weekdayVSweekend}.
+
+``` r
+accel_data_tidy %>%
+  group_by(week, day) %>%
+  summarise(total = sum(counts)) %>%
+  pivot_wider(names_from = day,
+              values_from = total)%>%
+      knitr::kable()
+```
+
+| week |    Monday |  Tuesday | Wednesday | Thursday |   Friday | Saturday | Sunday |
+| ---: | --------: | -------: | --------: | -------: | -------: | -------: | -----: |
+|    1 |  78828.07 | 307094.2 |    340115 | 355923.6 | 480542.6 |   376254 | 631105 |
+|    2 | 295431.00 | 423245.0 |    440962 | 474048.0 | 568839.0 |   607175 | 422018 |
+|    3 | 685910.00 | 381507.0 |    468869 | 371230.0 | 467420.0 |   382928 | 467052 |
+|    4 | 409450.00 | 319568.0 |    434460 | 340291.0 | 154049.0 |     1440 | 260617 |
+|    5 | 389080.00 | 367824.0 |    445366 | 549658.0 | 620860.0 |     1440 | 138421 |
+
+# From the table, we can find on Monday of week 1, the total activity is very low, and that total acticity in Saturday of week 4 and 5 is 1440, and maybe it makes fault.
+
+``` r
+accel_data_tidy %>%
+  mutate(
+   activity = as.numeric(activity)) %>%
+ mutate(
+    hour=(activity) %/%60) %>%
+  group_by(hour, day, week) %>%
+  summarise(hour_activity = sum(activity)) %>%
+ggplot( aes(x=week, y=hour, color = day)) +  geom_point() +
+  labs(
+    title = "24-hour activity time for each day",
+    x = "week",
+    y = "24-hour activity sum"
+   ) 
+```
+
+<img src="hw3_files/figure-gfm/unnamed-chunk-13-1.png" width="100%" />

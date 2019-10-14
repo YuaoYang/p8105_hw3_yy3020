@@ -157,4 +157,47 @@ From the plot of 2006, we can find the data value is changed variously from poor
 From the plot of 2010, the total trend is the same as it in 2016, the good and very good response have the higher value for the all countries.
 
 
+#Problem 3
 
+```{r}
+accel_data = read_csv(file = "./accel_data.csv")
+accel_data_tidy = read_csv(file = "./accel_data.csv")%>% 
+  janitor::clean_names() %>%
+  pivot_longer(4:1443, names_to = "activity",names_prefix = "activity_", values_to = "counts") %>%
+   mutate(day = factor(day, level = c("Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))) %>%
+  select(week, day, activity, counts) %>%
+  mutate(weekdayVSweekend = ifelse(day %in% c("Monday","Tuesday", "Wednesday", "Thursday", "Friday"),  "weekday", "weekend" )) 
+
+```
+There are {`r nrow(accel_data_tidy) `} observations and {`r ncol(accel_data_tidy) `} variables. And the names of  variables are {`r colnames(accel_data_tidy) `}.
+
+```{r}
+accel_data_tidy %>%
+  group_by(week, day) %>%
+  summarise(total = sum(counts)) %>%
+  pivot_wider(names_from = day,
+              values_from = total)%>%
+      knitr::kable()
+
+
+```
+
+
+# From the table, we can find on Monday of week 1, the total activity is very low, and that total acticity in Saturday of week 4 and 5 is 1440, and maybe it makes fault.
+
+```{r}
+accel_data_tidy %>%
+  mutate(
+   activity = as.numeric(activity)) %>%
+ mutate(
+    hour=(activity) %/%60) %>%
+  group_by(hour, day, week) %>%
+  summarise(hour_activity = sum(activity)) %>%
+ggplot( aes(x=week, y=hour, color = day)) +  geom_point() +
+  labs(
+    title = "24-hour activity time for each day",
+    x = "week",
+    y = "24-hour activity sum"
+   ) 
+
+```
