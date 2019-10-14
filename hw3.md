@@ -150,3 +150,113 @@ fruits.
 \#From the table, I find that in Coffee Ice Cream, the mean hour is
 concerning on afternoon from 13 to 15, and the mean hour is concerning
 on noon from 11 to 14.
+
+\#Problem 2
+
+``` r
+data('brfss_smart2010') 
+overall_health = brfss_smart2010 %>%
+janitor::clean_names()  %>%
+  filter(topic == "Overall Health") %>%
+  filter(response %in% c("Poor", "Fair", "Good", "Very good", "Excellent")) %>%
+  mutate(response = factor(response, level = c("Poor", "Fair", "Good", "Very good", "Excellent"))) %>%
+    arrange(desc(response))
+```
+
+    ## Warning in FUN(X[[i]], ...): strings not representable in native encoding
+    ## will be translated to UTF-8
+
+Try to tidy the dataset and concern on the overall health.
+
+``` r
+overall_health %>%
+  filter(year %in% c (2002, 2010)) %>%
+  group_by(locationdesc, locationabbr,year) %>%
+  count() %>%
+  group_by(year,locationabbr)%>%
+  count()%>%
+  filter( n >= 7)
+```
+
+    ## # A tibble: 20 x 3
+    ## # Groups:   year, locationabbr [20]
+    ##     year locationabbr     n
+    ##    <int> <chr>        <int>
+    ##  1  2002 CT               7
+    ##  2  2002 FL               7
+    ##  3  2002 MA               8
+    ##  4  2002 NC               7
+    ##  5  2002 NJ               8
+    ##  6  2002 PA              10
+    ##  7  2010 CA              12
+    ##  8  2010 CO               7
+    ##  9  2010 FL              41
+    ## 10  2010 MA               9
+    ## 11  2010 MD              12
+    ## 12  2010 NC              12
+    ## 13  2010 NE              10
+    ## 14  2010 NJ              19
+    ## 15  2010 NY               9
+    ## 16  2010 OH               8
+    ## 17  2010 PA               7
+    ## 18  2010 SC               7
+    ## 19  2010 TX              16
+    ## 20  2010 WA              10
+
+``` r
+#first group_by the locationdesc, then group_by the locationabbr, then count the observation in each group.
+```
+
+In 2002, there are 6 states observed at 7 or more locations, but in
+2010, the number of states increaes to 20.
+
+``` r
+avg = overall_health %>%
+  filter(response == "Excellent") %>%
+  select(year, locationabbr, data_value) %>%
+  group_by(year, locationabbr) %>%
+  summarize(average_data_value = mean(data_value))
+#summarize overwrite the original data, but mutate add new column of data if the name is not same as the original one
+
+ggplot(avg, aes(x = year, y = average_data_value, color= locationabbr)) +
+  geom_line() +
+  labs(
+    title = "Spaghetti plot"
+    )
+```
+
+    ## Warning: Removed 3 rows containing missing values (geom_path).
+
+<img src="hw3_files/figure-gfm/unnamed-chunk-9-1.png" width="100%" />
+From the spaghetti plot, we can find that the range of average date
+value in most of states is between 15 to 25.
+
+``` r
+plot_2006 = overall_health %>%
+  filter(year == 2006 & locationabbr == "NY") %>% 
+  ggplot(aes(x = response,
+        y = data_value,
+     fill = locationdesc))+ geom_bar(stat = "identity", position=position_dodge()) +
+  labs(
+    title = "the data value in 2006 "
+    )
+
+plot_2010 = overall_health %>%
+  filter(year == 2010 & locationabbr == "NY") %>% 
+  ggplot(aes(x = response,
+        y = data_value,
+    fill = locationdesc))+ geom_bar(stat = "identity", position=position_dodge()) +
+   labs(
+    title = "the data value in 2010 "
+    )
+
+
+ plot_2006 + plot_2010
+```
+
+<img src="hw3_files/figure-gfm/unnamed-chunk-10-1.png" width="100%" />
+From the plot of 2006, we can find the data value is changed variously
+from poor to excellent, and the good and very good response have the
+higher value. From the plot of 2010, the total trend is the same as it
+in 2016, the good and very good response have the higher value for the
+all countries.
